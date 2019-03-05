@@ -1,0 +1,384 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 39.6249321
+  longitude: -104.9943657
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 1639
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Denver
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables configuration UI
+config:
+
+lovelace:
+
+system_health:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret api_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  base_url: hass.rspears.me
+  #ssl_certificate: /etc/letsencrypt/live/hass.rspears.me/fullchain.pem
+  #ssl_key: /etc/letsencrypt/live/hass.rspears.me/privkey.pem
+
+api:
+
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+namecheapdns:
+  domain: rspears.me
+  password: !secret namecheapdns_pw
+
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    mode: daily
+
+media_player:
+  - platform: vizio
+    host: 192.168.0.121
+    access_token: !secret vizio_access_token
+  - platform: mpd
+    host: 127.0.0.1
+    port: 6602
+
+map:
+
+# Text to speech
+tts:
+  platform: google
+
+group: !include groups.yaml
+
+wemo:
+  static:
+    - 192.168.0.102
+    - 192.168.0.120
+    - 192.168.0.134
+
+eufy:
+  username: rspears690@gmail.com
+  password: !secret eufy_pw
+
+#vacuum:
+#  - platform: roomba
+#    host: 192.168.0.124
+#    username: 
+#    password: Leader11
+
+wink:
+
+mqtt:
+  password: !secret mqtt_pw
+  discovery: true
+
+frontend:
+  themes: !include themes.yaml
+
+lock:
+  platform: kevo
+  email: rspears690@gmail.com
+  password: !secret kevo_pw
+
+transmission:
+  host: 127.0.0.1
+  username: randall
+  password: !secret transmission_pw
+
+camera:
+  - platform: ffmpeg
+    input: rtsp://192.168.0.137:8554/unicast
+    name: Grow Tent
+
+  #logger:
+  #  default: debug
+
+light:
+  - platform: hue
+    host: 192.168.0.100
+    allow_unreachable: true
+  - platform: switch
+    name: Hanging Light
+    entity_id: switch.office_light
+  - platform: switch
+    name: String Lights
+    entity_id: switch.salt_lamp
+  - platform: switch
+    name: Bud Light
+    entity_id: switch.bud_lamp
+  - platform: group
+    name: Randall Office
+    entities:
+      - light.randall_office_ceiling
+      - light.hanging_light
+      - light.bud_light
+      - light.turkish_lamp
+  - platform: group
+    name: Taylor Office All
+    entities:
+      - light.overhead_taylor
+      - light.taylor_desk_lamp
+      - light.string_lights
+  - platform: group
+    name: Bedroom Ceiling
+    entities:
+      - light.hue_color_lamp_1
+      - light.hue_white_lamp_1
+  - platform: group
+    name: Basement Ceiling 1
+    entities:
+      - light.lr_ceiling_1
+      - light.lr_ceiling_2
+  - platform: group
+    name: Basement Ceiling 2
+    entities:
+      - light.lr_ceiling_3
+      - light.lr_ceiling_4
+  - platform: switch
+    name: Turkish Lamp
+    entity_id: switch.turkish_lamp
+
+device_tracker:
+  - platform: tplink
+    host: 192.168.0.1
+    username: !secret tplink_username
+    password: !secret tplink_pw
+    new_device_defaults:
+      track_new_devices: true
+  - platform: ping
+    hosts:
+      taylor_home: 192.168.0.128
+
+google_assistant:
+  project_id: home-assistant-b0e72
+  api_key: !secret google_assistant_api_key
+
+  #googlehome:
+  #devices:
+  #  - host: 192.168.0.109
+  #  - host: 192.168.0.111
+  #  - host: 192.168.0.114
+  #  - host: 192.168.0.112
+
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_pw
+
+  #device_tracker:
+  # - platform: owntracks_http
+
+zone:
+  - name: Home
+    latitude: 39.6253331
+    longitude: -104.9930357
+    radius: 150
+    icon: mdi:home
+  - name: Taylor Office
+    latitude: 39.611922
+    longitude: -105.023094
+    icon: mdi:work
+
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: processor_use
+      - type: memory_use_percent
+      - type: last_boot
+  - platform: template
+    sensors:
+      pixel_battery:
+        friendly_name: Pixel Battery
+        unit_of_measurement: "%"
+        value_template: '{{ states.device_tracker.randall_pixel.attributes.battery|int }}'
+        device_class: battery
+      randall_dist:
+        friendly_name: Randall Distance
+        unit_of_measurement: "mi"
+        value_template: '{{ (distance(states.device_tracker.randall_pixel)) | round(1) }}'
+      time_til_sunset:
+        friendly_name: Time Until Sunset
+        value_template: '{{ states.sun.sun.attributes.next_setting }}'
+      last_boot_pretty:
+        friendly_name: Last Boot
+        value_template: '{{ as_timestamp(states.sensor.last_boot.state) | timestamp_custom("%a %-m/%-d/%-y, %-I:%M %P") }}'
+  - platform: darksky
+    api_key: !secret dark_sky_api_key
+    forecast:
+      - 0
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      - temperature_high
+      - temperature_low
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - precip_accumulation
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - nearest_storm_distance
+      - nearest_storm_bearing
+      - sunrise_time
+      - sunset_time
+ # - platform: temp_sensor
+  - platform: mqtt
+    state_topic: "tele/sonoff/SENSOR"
+    name: "Grow Room 2 Temp"
+    unit_of_measurement: "°F"
+    value_template: "{{ (value_json['SI7021'].Temperature * 9 / 5 + 32) | round(1) }}"
+  - platform: mqtt
+    state_topic: "tele/sonoff/SENSOR"
+    name: "Grow Room 2 Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['SI7021'].Humidity }}"
+  - platform: mqtt
+    state_topic: "tele/sonoff1/SENSOR"
+    name: "Grow Room 1 Temp"
+    unit_of_measurement: "°F"
+    value_template: "{{ (value_json['SI7021'].Temperature * 9 / 5 + 32) | round(1) }}"
+  - platform: mqtt
+    state_topic: "tele/sonoff1/SENSOR"
+    name: "Grow Room 1 Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['SI7021'].Humidity }}"
+  - platform: mqtt
+    state_topic: "tele/sonoff2/SENSOR"
+    name: "Grow Tent Temp"
+    unit_of_measurement: "°F"
+    value_template: "{{ (value_json['SI7021'].Temperature * 9 / 5 + 32) | round(1) }}"
+  - platform: mqtt
+    state_topic: "tele/sonoff2/SENSOR"
+    name: "Grow Tent Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['SI7021'].Humidity }}"
+  - platform: nws
+    zones:
+      - COZ240
+      - COZ040
+      - COC005
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+  - platform: dnsip
+
+input_select:
+  cool_temp:
+    name: Cooling Temp
+    options:
+      - 67
+      - 68
+      - 69
+      - 70
+      - 71
+      - 72
+      - 73
+      - 74
+      - 75
+    icon: mdi:air-conditioner
+  heat_temp:
+    name: Heating Temp
+    options:
+      - 62
+      - 63
+      - 64
+      - 65
+      - 66
+      - 67
+      - 68
+      - 69
+      - 70
+      - 71
+      - 72
+    icon: mdi:fire
+
+input_number:
+  on_time:
+    name: On (hrs)
+    min: 0.5
+    max: 4
+    step: 0.1
+    icon: mdi:toggle-switch
+  off_time:
+    name: Off (hrs)
+    min: 0.25
+    max: 2
+    step: 0.05
+    icon: mdi:toggle-switch-off
+
+shell_command:
+  ha_start: 'curl http://localhost:1880/hastart'
+  goodnight: 'curl http://localhost:1880/goodnight'
+  influx_write: /home/homeassistant/.homeassistant/influxwrite.sh
+
+automation:
+  - alias: hass_start
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - service: shell_command.ha_start
+  - alias: if_write
+    trigger:
+      - platform: time_pattern
+        minutes: '/5'
+        seconds: 00
+    action:
+      service: shell_command.influx_write
+
+panel_iframe:
+  node_red:
+    title: 'Node-RED'
+    url: 'https://node-red.rspears.me'
+    icon: mdi:shuffle-variant
+  grafana:
+    title: 'Grafana'
+    url: 'https://grafana.rspears.me'
+    icon: mdi:chart-line
+
+influxdb:
+  exclude:
+    domains:
+      - light
+        group
+        input_number
+        input_select
+        binary_sensor
+
+script:
+  goodnight:
+    sequence:
+      - service: shell_command.goodnight

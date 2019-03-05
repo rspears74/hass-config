@@ -1,0 +1,80 @@
+# Weather shit
+sensor.dark_sky_temperature:
+  friendly_name: Outdoor Temp
+sensor.dark_sky_precip_accumulation:
+  friendly_name: Precipitation Today
+  icon: mdi:cup-water
+sensor.dark_sky_humidity:
+  friendly_name: Humidity
+  icon: mdi:water-percent
+sensor.dark_sky_summary:
+  friendly_name: Conditions
+sensor.dark_sky_wind_bearing:
+  friendly_name: Wind Direction
+  icon: mdi:compass
+sensor.dark_sky_wind_speed:
+  friendly_name: Wind Speed
+  icon: mdi:weather-windy
+sensor.dark_sky_pressure:
+  friendly_name: Pressure
+  icon: mdi:gauge
+sensor.dark_sky_cloud_coverage:
+  friendly_name: Cloud Cover
+  icon: mdi:weather-partlycloudy
+
+# Climate/thermostat stuff
+sensor.hallway_thermostat_humidity:
+  friendly_name: Indoor Humidity
+  icon: mdi:water-percent
+sensor.hallway_thermostat_hvac_state:
+  friendly_name: HVAC State
+  icon: mdi:fan
+sensor.hallway_thermostat_temperature:
+  friendly_name: Indoor Temp
+
+# Switches
+switch.office_light:
+  friendly_name: Hanging Light
+  icon: mdi:lightbulb
+switch.bud_lamp:
+  friendly_name: Bud Light
+  icon: mdi:lightbulb
+switch.back_porch_lights:
+  friendly_name: Back Porch
+  icon: mdi:lightbulb
+switch.turkish_lamp:
+  friendly_name: Turkish Lamp
+  icon: mdi:lightbulb
+
+# Lights
+light.randall_office_ceiling:
+  friendly_name: Ceiling
+light.taylor_office_all:
+  friendly_name: Taylor Office
+light.overhead_taylor:
+  friendly_name: Ceiling
+light.taylor_desk_lamp:
+  friendly_name: Desk Lamp
+light.basement_ceiling_1:
+  friendly_name: Ceiling Back
+light.basement_ceiling_2:
+  friendly_name: Ceiling Front
+light.bedroom_ceiling:
+  friendly_name: Ceiling
+light.porch_light:
+  friendly_name: Front Porch
+
+# Misc Sensors
+sensor.randall_dist:
+  icon: mdi:ruler
+sensor.nws_weather_alert:
+  icon: mdi:alert
+sensor.grow_tent_humidity:
+  icon: mdi:water-percent
+
+# Other
+lock.front_door:
+  templates:
+    hs_color: if (state === 'locked') return [120, 1]; else return [0, 1];
+media_player.vizio_smartcast:
+  friendly_name: TV

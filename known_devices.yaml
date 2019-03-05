@@ -1,0 +1,168 @@
+randall_pixel:
+  hide_if_away: false
+  icon:
+  mac:
+  name: Randall
+  picture: /local/randall.jpg
+  track: true
+
+60_38_e0_eb_a1_7d:
+  hide_if_away: false
+  icon:
+  mac: 60:38:E0:EB:A1:7D
+  name: 60 38 e0 eb a1 7d
+  picture:
+  track: false
+
+a4_da_22_2c_e3_ca:
+  hide_if_away: false
+  icon:
+  mac: A4:DA:22:2C:E3:CA
+  name: a4 da 22 2c e3 ca
+  picture:
+  track: false
+
+40_9f_38_29_bf_e4:
+  hide_if_away: false
+  icon:
+  mac: 40:9F:38:29:BF:E4
+  name: 40 9f 38 29 bf e4
+  picture:
+  track: false
+
+18_b4_30_cc_22_4f:
+  hide_if_away: false
+  icon:
+  mac: 18:B4:30:CC:22:4F
+  name: 18 b4 30 cc 22 4f
+  picture:
+  track: false
+
+a4_da_22_30_08_90:
+  hide_if_away: false
+  icon:
+  mac: A4:DA:22:30:08:90
+  name: a4 da 22 30 08 90
+  picture:
+  track: false
+
+64_16_66_6c_5b_2d:
+  hide_if_away: false
+  icon:
+  mac: 64:16:66:6C:5B:2D
+  name: 64 16 66 6c 5b 2d
+  picture:
+  track: false
+
+24_f5_a2_96_be_db:
+  hide_if_away: false
+  icon:
+  mac: 24:F5:A2:96:BE:DB
+  name: 24 f5 a2 96 be db
+  picture:
+  track: false
+
+24_f5_a2_1a_cd_d1:
+  hide_if_away: false
+  icon:
+  mac: 24:F5:A2:1A:CD:D1
+  name: 24 f5 a2 1a cd d1
+  picture:
+  track: false
+
+7c_d1_c3_21_fd_ca:
+  hide_if_away: false
+  icon:
+  mac: 7C:D1:C3:21:FD:CA
+  name: 7c d1 c3 21 fd ca
+  picture:
+  track: false
+
+c8_69_cd_30_e5_43:
+  hide_if_away: false
+  icon:
+  mac: C8:69:CD:30:E5:43
+  name: c8 69 cd 30 e5 43
+  picture:
+  track: false
+
+randall_home:
+  hide_if_away: false
+  icon:
+  mac: 40:4E:36:25:DB:0E
+  name: Randall Home
+  picture: /local/randall.jpg
+  track: true
+
+taylor_home:
+  hide_if_away: false
+  icon:
+  mac: 40:4E:36:91:21:99
+  name: Taylor
+  picture: /local/taylor.jpg
+  track: true
+
+a4_da_22_38_e5_31:
+  hide_if_away: false
+  icon:
+  mac: A4:DA:22:38:E5:31
+  name: a4 da 22 38 e5 31
+  picture:
+  track: false
+
+dc_4f_22_43_a7_35:
+  hide_if_away: false
+  icon:
+  mac: DC:4F:22:43:A7:35
+  name: dc 4f 22 43 a7 35
+  picture:
+  track: false
+
+d0_c5_d3_50_7f_0b:
+  hide_if_away: false
+  icon:
+  mac: D0:C5:D3:50:7F:0B
+  name: d0 c5 d3 50 7f 0b
+  picture:
+  track: false
+
+28_57_67_f7_13_da:
+  hide_if_away: false
+  icon:
+  mac: 28:57:67:F7:13:DA
+  name: 28 57 67 f7 13 da
+  picture:
+  track: false
+
+20_df_b9_60_79_9d:
+  hide_if_away: false
+  icon:
+  mac: 20:DF:B9:60:79:9D
+  name: 20 df b9 60 79 9d
+  picture:
+  track: false
+
+homeassistant_pixel:
+  hide_if_away: false
+  icon:
+  mac:
+  name: homeassistant
+  picture:
+  track: false
+
+
+58_b3_fc_12_47_43:
+  hide_if_away: false
+  icon:
+  mac: 58:B3:FC:12:47:43
+  name: 58 b3 fc 12 47 43
+  picture:
+  track: false
+
+1c_ab_a7_05_55_d3:
+  hide_if_away: false
+  icon:
+  mac: 1C:AB:A7:05:55:D3
+  name: 1c ab a7 05 55 d3
+  picture:
+  track: true

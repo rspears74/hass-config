@@ -1,0 +1,440 @@
+title: Home
+# Include external resources
+resources:
+  - url: /local/card-tools.js
+    type: js
+  - url: /local/lovelace-useful-markdown-card.js
+    type: js
+  - url: /local/sun-card.js
+    type: js
+  - url: /local/nws-alert-card.js
+    type: js
+  - url: /local/entity-attributes-card.js
+    type: js
+
+# Optional background for all views. Check https://developer.mozilla.org/en-US/docs/Web/CSS/background for more examples.
+#background: center / cover no-repeat url("/background.png") fixed
+# Exclude entities from "Unused entities" view
+#excluded_entities:
+#  - weblink.router
+views:
+    # View tab title.
+  - title: Main
+    # Optional unique id for direct access /lovelace/${id}
+    id: main
+    icon: mdi:home
+    cards:
+        # The filter card will filter entities for their state
+      - type: entities
+        entities:
+          - device_tracker.randall_pixel
+          - device_tracker.taylor_home
+        show_header_toggle: false
+      - type: custom:sun-card
+      - type: vertical-stack
+        cards:
+          - type: weather-forecast
+            entity: weather.dark_sky
+          - type: conditional
+            conditions:
+              - entity: sensor.nws_weather_alert
+                state_not: '0'
+            card:
+              type: custom:nws-alert-card
+              theme: alert
+      - type: entities
+        entities:
+          - lock.front_door
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - climate.hallway
+          - sensor.hallway_thermostat_hvac_state
+          - sensor.hallway_thermostat_humidity
+      - type: entity-button
+        name: Goodnight
+        entity: script.goodnight
+        tap_action:
+          action: call-service
+          service: script.turn_on
+          service_data:
+            entity_id: script.goodnight
+        icon: mdi:weather-night
+      - type: entities
+        title: Lights
+        entities:
+          - light.bedroom
+          - light.basement
+          - light.randall_office
+          - light.taylor_office_all
+
+    # Specify a tab icon if you want the view tab to be an icon.
+  - icon: mdi:lightbulb
+    # Title of the view. Will be used as the tooltip for tab icon
+    title: Lights
+    cards:
+        # Entities card will take a list of entities and show their state.
+      - type: entities
+        # Title of the entities card
+        title: Bedroom
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - light.bedroom_ceiling
+          - light.randall_bedside_lamp
+          - light.taylor_bedside_lamp
+          - light.hue_go
+      - type: entities
+        title: Basement
+        entities:
+          - light.basement_ceiling_1
+          - light.basement_ceiling_2
+          - light.floor_lamp
+      - type: entities
+        title: Outside
+        entities:
+          - light.porch_light
+          - switch.back_porch_lights
+      - type: entities
+        title: Randall Office
+        entities:
+          - light.randall_office_ceiling
+          - light.hanging_light
+          - light.bud_light
+          - light.turkish_lamp
+      - type: entities
+        title: Taylor Office
+        entities:
+          - light.overhead_taylor
+          - light.taylor_desk_lamp
+          - light.string_lights
+
+  - icon: mdi:thermostat
+    title: Climate
+    cards:
+      - type: entities
+        entities:
+          - climate.hallway
+          - sensor.hallway_thermostat_hvac_state
+          - sensor.hallway_thermostat_humidity
+          - input_select.cool_temp
+          - input_select.heat_temp
+          - input_number.on_time
+          - input_number.off_time
+        show_header_toggle: false
+        title: Climate Control
+      - type: history-graph
+        entities:
+          - sensor.dark_sky_temperature
+          - sensor.hallway_thermostat_temperature
+          - sensor.hallway_thermostat_hvac_state
+          - sensor.hallway_thermostat_humidity
+          - sensor.dark_sky_humidity
+        title: HVAC State
+  - icon: mdi:cannabis
+    title: Garden
+    cards:
+      - type: glance
+        entities:
+          - sensor.grow_tent_temp
+          - sensor.grow_tent_humidity
+        title: Grow Tent
+      - type: picture-entity
+        entity: camera.grow_tent
+      - type: history-graph
+        entities:
+          - sensor.grow_tent_temp
+        hours_to_show: 12
+        title: Temperature
+      - type: history-graph
+        entities:
+          - sensor.grow_tent_humidity
+        hours_to_show: 12
+        title: Humidity
+  - icon: mdi:web
+    title: Links
+    path: links
+    cards:
+      - type: entities
+        title: Links
+        show_header_toggle: false
+        entities:
+          - type: weblink
+            url: https://mail.google.com
+            icon: mdi:gmail
+            name: gmail
+          - type: weblink
+            url: https://riot.im/app
+            name: riot
+            icon: mdi:message-reply
+          - type: weblink
+            url: https://www.dropbox.com
+            name: dropbox
+            icon: mdi:dropbox
+          - type: weblink
+            url: https://smile.amazon.com
+            name: amazon
+            icon: mdi:amazon
+          - type: weblink
+            url: https://last.fm/user/randeezydizzle
+            name: last.fm
+            icon: mdi:music
+          - type: weblink
+            url: https://drive.google.com
+            name: drive
+            icon: mdi:google-drive
+          - type: weblink
+            url: https://sheets.google.com
+            name: sheets
+            icon: mdi:google-spreadsheet
+          - type: weblink
+            url: https://docs.google.com
+            name: docs
+            icon: mdi:file-document-box-outline
+          - type: weblink
+            url: https://jupyter.rspears.me
+            name: jupyter
+            icon: mdi:notebook
+          - type: weblink
+            url: https://home-assistant.io
+            name: home assistant
+            icon: mdi:home-assistant
+      - type: entities
+        title: Computer Shit
+        show_header_toggle: false
+        entities:
+          - type: weblink
+            url: https://node-red.rspears.me
+            name: node-red
+            icon: mdi:shuffle-variant
+          - type: weblink
+            url: https://github.com
+            name: github
+            icon: mdi:github-circle
+          - type: weblink
+            url: https://www.namecheap.com
+            name: namecheap
+            icon: mdi:server-network
+      - type: entities
+        title: Money
+        show_header_toggle: false
+        entities:
+          - type: weblink
+            url: https://www.wellsfargo.com
+            name: wells fargo
+            icon: mdi:bank
+          - type: weblink
+            url: https://www.americanexpress.com
+            name: amex
+            icon: mdi:credit-card
+          - type: weblink
+            url: https://invest.ameritrade.com/grid/p/site#r=home
+            name: td ameritrade
+            icon: mdi:chart-line
+          - type: weblink
+            url: https://www.plainscapital.com
+            name: plains capital
+            icon: mdi:bank
+      - type: entities
+        title: Bills
+        show_header_toggle: false
+        entities:
+          - type: weblink
+            url: https://www.wm.com
+            name: waste management
+            icon: mdi:delete
+          - type: weblink
+            url: https://www.xcelenergy.com
+            name: xcel energy
+            icon: mdi:power-plug
+          - type: weblink
+            url: https://my.xfinity.com/?cid=cust
+            name: xfinity
+            icon: mdi:router-wireless
+          - type: weblink
+            url: https://www.myloancare.com/pub/index.html#/Login?ReturnUrl=/
+            name: mortgage
+            icon: mdi:home-currency-usd
+          - type: weblink
+            url: https://ipn.paymentus.com/cp/engl
+            name: water
+            icon: mdi:water-pump
+  - icon: mdi:desktop-classic
+    title: System
+    path: system
+    cards:
+      - type: gauge
+        entity: sensor.disk_use_percent
+        name: Disk
+        severity:
+          green: 0
+          yellow: 40
+          red: 65
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.memory_use_percent
+            name: RAM
+            severity:
+              green: 0
+              yellow: 50
+              red: 75
+          - type: gauge
+            entity: sensor.processor_use
+            name: CPU
+            severity:
+              green: 0
+              yellow: 40
+              red: 80
+      - type: vertical-stack
+        cards:
+          - type: sensor
+            entity: sensor.myip
+            name: Server IP Address
+            icon: mdi:ip-network
+          - type: sensor
+            entity: sensor.last_boot_pretty
+  - icon: mdi:sofa
+    title: Basement
+    path: basement
+    cards:
+      - type: light
+        entity: light.basement
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.basement_ceiling_1
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.basement_ceiling_2
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.floor_lamp
+            tap_action:
+              action: toggle
+      - type: media-control
+        entity: media_player.vizio_smartcast
+  - icon: mdi:human-male
+    title: Randall Office
+    path: roffice
+    cards:
+      - type: light
+        entity: light.randall_office
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.randall_office_ceiling
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.hanging_light
+            tap_action:
+              action: toggle
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.bud_light
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.turkish_lamp
+            tap_action:
+              action: toggle
+  - icon: mdi:human-female
+    title: Taylor Office
+    path: toffice
+    cards:
+      - type: light
+        entity: light.taylor_office_all
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.overhead_taylor
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.taylor_desk_lamp
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.string_lights
+            tap_action:
+              action: toggle
+  - icon: mdi:hotel
+    title: Bedroom
+    path: bedroom
+    cards:
+      - type: light
+        entity: light.bedroom
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.bedroom_ceiling
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.hue_go
+            tap_action:
+              action: toggle
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.randall_bedside_lamp
+            tap_action:
+              action: toggle
+          - type: entity-button
+            entity: light.taylor_bedside_lamp
+            tap_action:
+              action: toggle
+      - type: horizontal-stack
+        cards:
+          - type: sensor
+            entity: sensor.dark_sky_temperature
+          - type: sensor
+            entity: sensor.hallway_thermostat_temperature
+      - type: entities
+        entities:
+          - lock.front_door
+          - climate.hallway
+          - input_select.heat_temp
+          - input_select.cool_temp
+  - icon: mdi:water-pump
+    title: Kitchen
+    path: kitchen
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: sensor
+            entity: sensor.dark_sky_temperature
+            graph: line
+            detail: 2
+          - type: sensor
+            entity: sensor.hallway_thermostat_temperature
+            graph: line
+            detail: 2
+      - type: entities
+        entities:
+          - lock.front_door
+          - climate.hallway
+          - input_select.heat_temp
+          - input_select.cool_temp
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: light.basement
+              - type: entity-button
+                entity: light.bedroom
+              - type: entity-button
+                entity: light.randall_office
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: light.taylor_office_all
+              - type: entity-button
+                entity: light.porch_light
+              - type: entity-button
+                entity: switch.back_porch_lights
